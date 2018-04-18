@@ -4,6 +4,10 @@ import BookModel from '../DataTypes/BookModel';
 import EBookshelf from '../DataTypes/EBookshelf';
 import BookLanguage from '../Utils/BookLanguage';
 
+/* Representing BookProps here as a class in order to indicate the required parameters for
+   basic functionality. In the future if I need any one-off functionality I can add extra
+   members to BookProps without putting them in the constructor (indicating that they are optional).
+ */
 class BookProps {
     constructor(
         public addToBookList: (book: BookModel, bookshelf: EBookshelf) => void,
@@ -24,25 +28,30 @@ class Book extends React.Component<BookProps, any> {
         const bookTitle = this.props.bookModel.bookTitle;
         const bookAuthors = this.props.bookModel.bookAuthors || [];
         const bookImageUrl = this.props.bookModel.bookImageUrl;
+        const style = (bookUrl: string): JSX.Element => {
+            return (
+                <div
+                    className="book-cover"
+                    style={{
+                        width: 128, height: 193,
+                        backgroundImage: `url(${bookUrl})`
+                    }}
+                >
+                </div>
+            );
+        };
 
         return (
             <div className="book">
                 <div className="book-top">
-                    <div
-                        className="book-cover"
-                        style={{
-                            width: 128, height: 193,
-                            backgroundImage: `url(${bookImageUrl})`
-                        }}
-                    >
-                    </div>
+                    {style(bookImageUrl)}
                     <div className="book-shelf-changer">
                         <select onChange={(event) => this.handleShelfChange(event)}>
                             <option value="none">Move to...</option>
                             {this.getSelectListOption(EBookshelf.currentlyReading)}
                             {this.getSelectListOption(EBookshelf.wantToRead)}
                             {this.getSelectListOption(EBookshelf.read)}
-                            <option value="remove">None</option>
+                            {this.getSelectListOption(EBookshelf.none)}
                         </select>
                     </div>
                 </div>

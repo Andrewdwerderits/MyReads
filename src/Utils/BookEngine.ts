@@ -11,12 +11,16 @@ class BookEntity {
             null :
             book.imageLinks.thumbnail;
 
+        let bookShelf = book.shelf == null  || book.shelf === '' ?
+            EBookshelf.none :
+            EBookshelf[<string> (book.shelf)];
+
         return new BookModel(
             book.id,
             book.title,
             book.authors,
             bookImageUrl,
-            EBookshelf[<string> (book.shelf)],
+            bookShelf,
         );
     }
 

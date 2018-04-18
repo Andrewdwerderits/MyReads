@@ -6,6 +6,7 @@ import BookModel from '../DataTypes/BookModel';
 import EBookshelf from '../DataTypes/EBookshelf';
 import BookSearch from '../Components/BookSearch';
 import BookEngine from '../Utils/BookEngine';
+import { BaseRoute, SearchRoute } from '../Utils/Routes';
 
 class BooksAppState {
     constructor (
@@ -60,7 +61,7 @@ class BooksApp extends React.Component {
     public render() {
         return (
             <div className="app">
-                <Route exact path="/search" render={() => (
+                <Route exact path={SearchRoute} render={() => (
                   <BookSearch
                       booksInGallery={this.state.books}
                       addToBooks={(book: BookModel, bookshelf: EBookshelf) => this.addToBooks(book, bookshelf)}
@@ -68,7 +69,7 @@ class BooksApp extends React.Component {
                   </BookSearch>
                 )}>
                 </Route>
-                <Route exact path="/" render={() => (
+                <Route exact path={BaseRoute} render={() => (
                       <BookGallery
                           books={this.state.books}
                           addToBooks={(book: BookModel, bookshelf: EBookshelf) => this.addToBooks(book, bookshelf)}
